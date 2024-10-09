@@ -1,6 +1,6 @@
 
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.18;
+pragma solidity 0.8.24;
 
 contract SimpleStorage {
 
@@ -11,20 +11,28 @@ contract SimpleStorage {
         uint age;
    }
 
-   Car[] public listCar;
+   Car[] listCar;
 
-   mapping (string => uint) public carsByName;
+   mapping (string => uint) carsByName;
 
-   function store(uint256 _favoriteNumber) public {
+   function store(uint256 _favoriteNumber) public virtual {
         favoriteNumber = _favoriteNumber;
    }
 
-    function getFavorityNumbe() public view returns(uint256){
+    function getFavoriteNumber() public view virtual returns(uint256){
         return favoriteNumber;
     }
     
     function addCar(string memory _name, uint _age) public {
         listCar.push(Car(_name, _age));
         carsByName[_name] = _age;
+    }
+
+    function getCarByName(string memory _name) public view returns(uint256) {
+        return carsByName[_name];
+    }
+
+    function getListCar(uint _indexCar) public view returns(string memory, uint256 age){
+        return (listCar[_indexCar].name, listCar[_indexCar].age);
     }
 } 
